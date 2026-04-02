@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -53,6 +54,7 @@ public class Member extends BaseMappingEntity {
 	@Column(name = "phone_number", nullable = false, length = 20)
 	private String phoneNumber;
 
+	@Builder
 	private Member(String email, String password, String name, String nickname, String phoneNumber) {
 		this.email = email;
 		this.password = password;
@@ -62,6 +64,12 @@ public class Member extends BaseMappingEntity {
 	}
 
 	public static Member signUp(String email, String password, String name, String nickname, String phoneNumber) {
-		return new Member(email, password, name, nickname, phoneNumber);
+		return Member.builder()
+			.email(email)
+			.password(password)
+			.name(name)
+			.nickname(nickname)
+			.phoneNumber(phoneNumber)
+			.build();
 	}
 }
