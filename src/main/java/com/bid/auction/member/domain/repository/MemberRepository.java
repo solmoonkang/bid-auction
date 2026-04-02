@@ -12,6 +12,8 @@ public interface MemberRepository {
 
 	Optional<Member> findByEmail(String email);
 
+	Optional<Member> findFirstByEmailOrNicknameOrPhoneNumber(String email, String nickname, String phoneNumber);
+
 	boolean existsByEmail(String email);
 
 	boolean existsByNickname(String nickname);
