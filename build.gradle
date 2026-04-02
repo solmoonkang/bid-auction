@@ -30,8 +30,12 @@ dependencies {
     runtimeOnly 'com.mysql:mysql-connector-j'
     runtimeOnly 'com.h2database:h2'
 
+    // Security Crypto
+    implementation 'org.springframework.security:spring-security-crypto'
+
     // Message Broker & Cache
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.session:spring-session-data-redis'
     implementation 'org.springframework.kafka:spring-kafka'
 
     // Validation
