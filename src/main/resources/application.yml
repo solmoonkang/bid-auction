@@ -1,3 +1,11 @@
 spring:
   application:
     name: bid-auction
+
+  session:
+    store-type: redis
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
