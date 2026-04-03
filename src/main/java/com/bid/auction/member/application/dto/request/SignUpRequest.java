@@ -27,7 +27,7 @@ public record SignUpRequest(
 	@NotBlank(message = "이름을 입력해주세요.")
 	String name,
 
-	@Schema(name = "닉네임", example = "test@example.com")
+	@Schema(name = "닉네임", example = "흥글등")
 	@NotBlank(message = "닉네임을 입력해주세요.")
 	String nickname,
 
