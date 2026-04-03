@@ -18,26 +18,29 @@ public class MemberValidator {
 	public void validateUniqueness(String email, String nickname, String phoneNumber) {
 		memberRepository.findFirstByEmailOrNicknameOrPhoneNumber(email, nickname, phoneNumber)
 			.ifPresent(member -> {
-				validateEmailUniqueness(member.getEmail(), email);
-				validateNicknameUniqueness(member.getNickname(), nickname);
-				validatePhoneNumberUniqueness(member.getPhoneNumber(), phoneNumber);
+				if (member.getEmail().equals(email))
+					throw new ConflictException(ErrorCode.EMAIL_DUPLICATION);
+				if (member.getNickname().equals(nickname))
+					throw new ConflictException(ErrorCode.NICKNAME_DUPLICATION);
+				if (member.getPhoneNumber().equals(phoneNumber))
+					throw new ConflictException(ErrorCode.PHONE_DUPLICATION);
 			});
 	}
 
-	private void validateEmailUniqueness(String savedEmail, String email) {
-		if (savedEmail.equals(email)) {
+	public void validateEmailUniqueness(String email) {
+		if (memberRepository.existsByEmail(email)) {
 			throw new ConflictException(ErrorCode.EMAIL_DUPLICATION);
 		}
 	}
 
-	private void validateNicknameUniqueness(String savedNickname, String nickname) {
-		if (savedNickname.equals(nickname)) {
+	public void validateNicknameUniqueness(String nickname) {
+		if (memberRepository.existsByNickname(nickname)) {
 			throw new ConflictException(ErrorCode.NICKNAME_DUPLICATION);
 		}
 	}
 
-	private void validatePhoneNumberUniqueness(String savedPhoneNumber, String phoneNumber) {
-		if (savedPhoneNumber.equals(phoneNumber)) {
+	public void validatePhoneNumberUniqueness(String phoneNumber) {
+		if (memberRepository.existsByPhoneNumber(phoneNumber)) {
 			throw new ConflictException(ErrorCode.PHONE_DUPLICATION);
 		}
 	}
