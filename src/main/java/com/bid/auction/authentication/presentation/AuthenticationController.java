@@ -2,6 +2,8 @@ package com.bid.auction.authentication.presentation;
 
 import static com.bid.auction.authentication.infrastructure.constant.SessionConst.*;
 
+import java.util.Optional;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +22,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -44,6 +47,21 @@ public class AuthenticationController {
 	) {
 		final SessionMember sessionMember = loginService.login(loginRequest);
 		httpServletRequest.getSession().setAttribute(MEMBER_SESSION, sessionMember);
+		return SuccessResponse.ok();
+	}
+
+	@Operation(summary = "로그아웃", description = "현재 세션을 무효화하여 로그아웃을 수행합니다.")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "로그아웃 성공")
+	})
+	@ResponseStatus(HttpStatus.OK)
+	@PostMapping("/logout")
+	public SuccessResponse<Void> logout(
+		@Parameter(hidden = true) HttpServletRequest httpServletRequest
+	) {
+		Optional.ofNullable(httpServletRequest.getSession(false))
+			.ifPresent(HttpSession::invalidate);
+
 		return SuccessResponse.ok();
 	}
 }
