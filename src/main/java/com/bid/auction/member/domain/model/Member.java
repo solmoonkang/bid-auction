@@ -72,4 +72,28 @@ public class Member extends BaseMappingEntity {
 			.phoneNumber(phoneNumber)
 			.build();
 	}
+
+	public boolean isSameEmail(String email) {
+		return this.email.equals(email);
+	}
+
+	public boolean isSameNickname(String nickname) {
+		return this.nickname.equals(nickname);
+	}
+
+	public boolean isSamePhoneNumber(String phoneNumber) {
+		return this.phoneNumber.equals(phoneNumber);
+	}
+
+	public void updateEmail(String email) {
+		this.email = email;
+	}
+
+	public void updateNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public void updatePhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 }
