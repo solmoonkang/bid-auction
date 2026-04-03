@@ -61,7 +61,6 @@ public class AuthenticationController {
 	) {
 		Optional.ofNullable(httpServletRequest.getSession(false))
 			.ifPresent(HttpSession::invalidate);
-
 		return SuccessResponse.ok();
 	}
 }
