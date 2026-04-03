@@ -14,7 +14,7 @@ import com.bid.auction.authentication.infrastructure.resolver.LoginMemberArgumen
 public class WebConfig implements WebMvcConfigurer {
 
 	private static final String[] BUSINESS_WHITELIST = {
-		"/api/v1/members/signup", "/api/v1/authentication/login"
+		"/api/v1/members/signup", "/api/v1/authentication/login", "/api/v1/authentication/logout"
 	};
 	private static final String[] INFRASTRUCTURE_WHITELIST = {
 		"/swagger-ui/**", "/v3/api-docs/**", "/error", "/favicon.ico"
