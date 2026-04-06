@@ -1,6 +1,7 @@
 package com.bid.auction.member.presentation;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ import com.bid.auction.member.application.dto.response.ProfileResponse;
 import com.bid.auction.member.application.service.ProfileReadService;
 import com.bid.auction.member.application.service.ProfileUpdateService;
 import com.bid.auction.member.application.service.SignUpService;
+import com.bid.auction.member.application.service.WithdrawalService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -37,6 +39,7 @@ public class MemberController {
 	private final SignUpService signUpService;
 	private final ProfileUpdateService profileUpdateService;
 	private final ProfileReadService profileReadService;
+	private final WithdrawalService withdrawalService;
 
 	@Operation(summary = "회원가입", description = "신규 사용자를 등록합니다.")
 	@ApiResponses({
@@ -111,6 +114,7 @@ public class MemberController {
 	@Operation(summary = "내 프로필 정보 조회", description = "현재 로그인한 회원의 프로필 정보를 조회합니다.")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "프로필 조회 성공"),
+		@ApiResponse(responseCode = "401", description = "인증되지 않은 사용자"),
 		@ApiResponse(responseCode = "404", description = "존재하지 않는 사용자"),
 		@ApiResponse(responseCode = "500", description = "서버 내부 오류")
 	})
@@ -122,5 +126,21 @@ public class MemberController {
 		return SuccessResponse.ok(
 			profileReadService.getProfile(sessionMember.id())
 		);
+	}
+
+	@Operation(summary = "회원 탈퇴", description = "현재 로그인한 회원의 계정을 탈퇴 처리합니다.")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "회원 탈퇴 성공"),
+		@ApiResponse(responseCode = "401", description = "인증되지 않은 사용자"),
+		@ApiResponse(responseCode = "404", description = "존재하지 않는 사용자"),
+		@ApiResponse(responseCode = "500", description = "서버 내부 오류")
+	})
+	@ResponseStatus(HttpStatus.OK)
+	@DeleteMapping
+	public SuccessResponse<Void> withdraw(
+		@LoginMember SessionMember sessionMember
+	) {
+		withdrawalService.withdraw(sessionMember.id());
+		return SuccessResponse.ok();
 	}
 }
