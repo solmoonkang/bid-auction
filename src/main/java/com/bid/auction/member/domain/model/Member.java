@@ -1,6 +1,12 @@
 package com.bid.auction.member.domain.model;
 
+import static com.bid.auction.member.infrastructure.constant.WithdrawalConst.*;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.SQLRestriction;
 
 import com.bid.auction.global.common.BaseMappingEntity;
 
@@ -26,6 +32,7 @@ import lombok.NoArgsConstructor;
 		@UniqueConstraint(name = "uk_member_phone_number", columnNames = "phone_number")
 	}
 )
+@SQLRestriction("deleted_at IS NULL")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseMappingEntity {
 
@@ -53,6 +60,10 @@ public class Member extends BaseMappingEntity {
 	@Comment("전화번호")
 	@Column(name = "phone_number", nullable = false, length = 20)
 	private String phoneNumber;
+
+	@Comment("탈퇴 일시")
+	@Column(name = "withdrawn_at")
+	private LocalDateTime withdrawnAt;
 
 	@Builder
 	private Member(String email, String password, String name, String nickname, String phoneNumber) {
@@ -95,5 +106,30 @@ public class Member extends BaseMappingEntity {
 
 	public void updatePhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	public void withdraw(LocalDateTime withdrawnAt) {
+		if (isWithdrawn()) return;
+
+		this.withdrawnAt = withdrawnAt;
+
+		this.email = formatWithdrawn(this.email);
+		this.nickname = formatWithdrawn(this.nickname);
+		this.phoneNumber = formatWithdrawn(this.phoneNumber);
+
+		this.name = WITHDRAWN_NAME;
+		this.password = WITHDRAWN_PASSWORD;
+	}
+
+	public boolean isWithdrawn() {
+		return withdrawnAt != null;
+	}
+
+	private String formatWithdrawn(String source) {
+		return String.format(
+			WITHDRAWN_SUFFIX_FORMAT,
+			source,
+			UUID.randomUUID().toString().substring(0, UUID_SHORT_LENGTH)
+		);
 	}
 }
