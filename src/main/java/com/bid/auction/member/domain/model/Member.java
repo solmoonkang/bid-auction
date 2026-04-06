@@ -32,7 +32,7 @@ import lombok.NoArgsConstructor;
 		@UniqueConstraint(name = "uk_member_phone_number", columnNames = "phone_number")
 	}
 )
-@SQLRestriction("deleted_at IS NULL")
+@SQLRestriction("withdrawn_at IS NULL")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseMappingEntity {
 
