@@ -1,6 +1,6 @@
-package com.bid.auction.authentication.presentation;
+package com.bid.auction.auth.presentation;
 
-import static com.bid.auction.authentication.infrastructure.constant.SessionConst.*;
+import static com.bid.auction.auth.infrastructure.constant.SessionConst.*;
 
 import java.util.Optional;
 
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bid.auction.authentication.application.dto.request.LoginRequest;
-import com.bid.auction.authentication.application.dto.session.SessionMember;
-import com.bid.auction.authentication.application.service.LoginService;
+import com.bid.auction.auth.application.dto.request.LoginRequest;
+import com.bid.auction.auth.application.dto.session.SessionMember;
+import com.bid.auction.auth.application.service.LoginService;
 import com.bid.auction.global.common.SuccessResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,7 +30,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/v1/authentication")
 @RequiredArgsConstructor
-public class AuthenticationController {
+public class AuthController {
 
 	private final LoginService loginService;
 
