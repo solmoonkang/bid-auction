@@ -1,4 +1,4 @@
-package com.bid.auction.authentication.infrastructure.constant;
+package com.bid.auction.auth.infrastructure.constant;
 
 public abstract class SessionConst {
 

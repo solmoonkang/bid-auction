@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bid.auction.authentication.application.dto.session.SessionMember;
-import com.bid.auction.authentication.infrastructure.resolver.LoginMember;
+import com.bid.auction.auth.application.dto.session.SessionMember;
+import com.bid.auction.auth.infrastructure.resolver.LoginMember;
 import com.bid.auction.global.common.SuccessResponse;
 import com.bid.auction.member.application.dto.request.EmailUpdateRequest;
 import com.bid.auction.member.application.dto.request.NicknameUpdateRequest;

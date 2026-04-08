@@ -1,4 +1,4 @@
-package com.bid.auction.authentication.application.dto.session;
+package com.bid.auction.auth.application.dto.session;
 
 import java.io.Serializable;
 

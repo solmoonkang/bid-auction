@@ -1,4 +1,4 @@
-package com.bid.auction.authentication.application.dto.request;
+package com.bid.auction.auth.application.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;

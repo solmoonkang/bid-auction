@@ -1,6 +1,6 @@
-package com.bid.auction.authentication.infrastructure.resolver;
+package com.bid.auction.auth.infrastructure.resolver;
 
-import static com.bid.auction.authentication.infrastructure.constant.SessionConst.*;
+import static com.bid.auction.auth.infrastructure.constant.SessionConst.*;
 
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -8,7 +8,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-import com.bid.auction.authentication.application.dto.session.SessionMember;
+import com.bid.auction.auth.application.dto.session.SessionMember;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;

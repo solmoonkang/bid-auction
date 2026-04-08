@@ -1,4 +1,4 @@
-package com.bid.auction.authentication.infrastructure.resolver;
+package com.bid.auction.auth.infrastructure.resolver;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

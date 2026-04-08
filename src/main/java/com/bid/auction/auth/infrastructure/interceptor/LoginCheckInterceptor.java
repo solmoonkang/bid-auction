@@ -1,6 +1,6 @@
-package com.bid.auction.authentication.infrastructure.interceptor;
+package com.bid.auction.auth.infrastructure.interceptor;
 
-import static com.bid.auction.authentication.infrastructure.constant.SessionConst.*;
+import static com.bid.auction.auth.infrastructure.constant.SessionConst.*;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 

@@ -7,8 +7,8 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.bid.auction.authentication.infrastructure.interceptor.LoginCheckInterceptor;
-import com.bid.auction.authentication.infrastructure.resolver.LoginMemberArgumentResolver;
+import com.bid.auction.auth.infrastructure.interceptor.LoginCheckInterceptor;
+import com.bid.auction.auth.infrastructure.resolver.LoginMemberArgumentResolver;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
