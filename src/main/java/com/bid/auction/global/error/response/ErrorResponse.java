@@ -9,8 +9,6 @@ import lombok.Builder;
 
 @Builder
 public record ErrorResponse(
-	String code,
-
 	String message,
 
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -18,10 +16,10 @@ public record ErrorResponse(
 ) {
 
 	public static ErrorResponse of(ErrorCode errorCode) {
-		return new ErrorResponse(errorCode.getCode(), errorCode.getMessage(), null);
+		return new ErrorResponse(errorCode.getMessage(), null);
 	}
 
 	public static ErrorResponse of(ErrorCode errorCode, Map<String, String> validation) {
-		return new ErrorResponse(errorCode.getCode(), errorCode.getMessage(), validation);
+		return new ErrorResponse(errorCode.getMessage(), validation);
 	}
 }
