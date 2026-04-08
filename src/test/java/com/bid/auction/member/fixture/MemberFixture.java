@@ -1,6 +1,7 @@
 package com.bid.auction.member.fixture;
 
 import com.bid.auction.member.application.dto.request.SignUpRequest;
+import com.bid.auction.member.domain.model.Member;
 
 public class MemberFixture {
 
@@ -53,6 +54,16 @@ public class MemberFixture {
 			"test@example.com",
 			"password123!",
 			"wrongPassword123!",
+			"testName",
+			"testNickname",
+			"01023456789"
+		);
+	}
+
+	public static Member aMember() {
+		return Member.signUp(
+			"test@example.com",
+			"encodedPassword123!",
 			"testName",
 			"testNickname",
 			"01023456789"
