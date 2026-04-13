@@ -4,6 +4,7 @@ import com.bid.auction.member.application.dto.request.EmailUpdateRequest;
 import com.bid.auction.member.application.dto.request.NicknameUpdateRequest;
 import com.bid.auction.member.application.dto.request.PhoneNumberUpdateRequest;
 import com.bid.auction.member.application.dto.request.SignUpRequest;
+import com.bid.auction.member.application.dto.request.WithdrawalRequest;
 import com.bid.auction.member.application.dto.response.ProfileResponse;
 import com.bid.auction.member.domain.model.Member;
 
@@ -128,6 +129,12 @@ public class MemberFixture {
 			member.getName(),
 			member.getNickname(),
 			member.getPhoneNumber()
+		);
+	}
+
+	public static WithdrawalRequest aWithdrawalRequest() {
+		return new WithdrawalRequest(
+			"password123!"
 		);
 	}
 }
