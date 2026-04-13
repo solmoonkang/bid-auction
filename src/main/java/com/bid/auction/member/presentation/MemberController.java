@@ -17,6 +17,7 @@ import com.bid.auction.member.application.dto.request.EmailUpdateRequest;
 import com.bid.auction.member.application.dto.request.NicknameUpdateRequest;
 import com.bid.auction.member.application.dto.request.PhoneNumberUpdateRequest;
 import com.bid.auction.member.application.dto.request.SignUpRequest;
+import com.bid.auction.member.application.dto.request.WithdrawalRequest;
 import com.bid.auction.member.application.dto.response.ProfileResponse;
 import com.bid.auction.member.application.service.ProfileReadService;
 import com.bid.auction.member.application.service.ProfileUpdateService;
@@ -138,9 +139,10 @@ public class MemberController {
 	@ResponseStatus(HttpStatus.OK)
 	@DeleteMapping
 	public SuccessResponse<Void> withdraw(
-		@LoginMember SessionMember sessionMember
+		@LoginMember SessionMember sessionMember,
+		@Valid @RequestBody WithdrawalRequest withdrawalRequest
 	) {
-		withdrawalService.withdraw(sessionMember.id());
+		withdrawalService.withdraw(sessionMember.id(), withdrawalRequest);
 		return SuccessResponse.ok();
 	}
 }
