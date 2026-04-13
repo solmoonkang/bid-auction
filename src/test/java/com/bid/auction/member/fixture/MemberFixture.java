@@ -4,6 +4,7 @@ import com.bid.auction.member.application.dto.request.EmailUpdateRequest;
 import com.bid.auction.member.application.dto.request.NicknameUpdateRequest;
 import com.bid.auction.member.application.dto.request.PhoneNumberUpdateRequest;
 import com.bid.auction.member.application.dto.request.SignUpRequest;
+import com.bid.auction.member.application.dto.response.ProfileResponse;
 import com.bid.auction.member.domain.model.Member;
 
 public class MemberFixture {
@@ -118,6 +119,15 @@ public class MemberFixture {
 	public static PhoneNumberUpdateRequest aPhoneNumberUpdateRequest(String phoneNumber) {
 		return new PhoneNumberUpdateRequest(
 			phoneNumber
+		);
+	}
+
+	public static ProfileResponse aProfileResponse(Member member) {
+		return new ProfileResponse(
+			member.getEmail(),
+			member.getName(),
+			member.getNickname(),
+			member.getPhoneNumber()
 		);
 	}
 }
