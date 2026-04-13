@@ -1,6 +1,8 @@
 package com.bid.auction.member.fixture;
 
 import com.bid.auction.member.application.dto.request.EmailUpdateRequest;
+import com.bid.auction.member.application.dto.request.NicknameUpdateRequest;
+import com.bid.auction.member.application.dto.request.PhoneNumberUpdateRequest;
 import com.bid.auction.member.application.dto.request.SignUpRequest;
 import com.bid.auction.member.domain.model.Member;
 
@@ -23,6 +25,26 @@ public class MemberFixture {
 			"testName",
 			"testNickname",
 			"01023456789"
+		);
+	}
+
+	public static Member aMemberWithNickname(String nickname) {
+		return Member.signUp(
+			"test@example.com",
+			"encodedPassword123!",
+			"testName",
+			nickname,
+			"01023456789"
+		);
+	}
+
+	public static Member aMemberWithPhoneNumber(String phoneNumber) {
+		return Member.signUp(
+			"test@example.com",
+			"encodedPassword123!",
+			"testName",
+			"testNickname",
+			phoneNumber
 		);
 	}
 
@@ -84,6 +106,18 @@ public class MemberFixture {
 	public static EmailUpdateRequest aEmailUpdateRequest(String email) {
 		return new EmailUpdateRequest(
 			email
+		);
+	}
+
+	public static NicknameUpdateRequest aNicknameUpdateRequest(String nickname) {
+		return new NicknameUpdateRequest(
+			nickname
+		);
+	}
+
+	public static PhoneNumberUpdateRequest aPhoneNumberUpdateRequest(String phoneNumber) {
+		return new PhoneNumberUpdateRequest(
+			phoneNumber
 		);
 	}
 }
