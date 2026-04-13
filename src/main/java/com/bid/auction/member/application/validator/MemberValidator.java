@@ -1,5 +1,6 @@
 package com.bid.auction.member.application.validator;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.bid.auction.global.error.exception.BadRequestException;
@@ -14,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 public class MemberValidator {
 
 	private final MemberRepository memberRepository;
+
+	private final PasswordEncoder passwordEncoder;
 
 	public void validateUniqueness(String email, String nickname, String phoneNumber) {
 		memberRepository.findFirstByEmailOrNicknameOrPhoneNumber(email, nickname, phoneNumber)
@@ -45,9 +48,15 @@ public class MemberValidator {
 		}
 	}
 
-	public void validatePasswordMatch(String password, String checkPassword) {
+	public void validatePasswordConfirmation(String password, String checkPassword) {
 		if (!password.equals(checkPassword)) {
 			throw new BadRequestException(ErrorCode.INVALID_INPUT_VALUE);
+		}
+	}
+
+	public void validatePassword(String rawPassword, String encodedPassword, ErrorCode errorCode) {
+		if (!passwordEncoder.matches(rawPassword, encodedPassword)) {
+			throw new BadRequestException(errorCode);
 		}
 	}
 }
