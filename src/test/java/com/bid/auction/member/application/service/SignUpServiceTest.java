@@ -48,7 +48,7 @@ class SignUpServiceTest {
 		signUpService.signUp(signUpRequest);
 
 		// THEN
-		verify(memberValidator).validatePasswordMatch(anyString(), anyString());
+		verify(memberValidator).validatePasswordConfirmation(anyString(), anyString());
 		verify(memberValidator).validateUniqueness(anyString(), anyString(), anyString());
 
 		ArgumentCaptor<Member> memberArgumentCaptor = ArgumentCaptor.forClass(Member.class);
@@ -66,7 +66,7 @@ class SignUpServiceTest {
 		SignUpRequest signUpRequest = MemberFixture.aSignUpRequestWithPasswordMismatch();
 
 		doThrow(new BadRequestException(ErrorCode.INVALID_INPUT_VALUE))
-			.when(memberValidator).validatePasswordMatch(signUpRequest.password(), signUpRequest.checkPassword());
+			.when(memberValidator).validatePasswordConfirmation(signUpRequest.password(), signUpRequest.checkPassword());
 
 		// WHEN & THEN
 		assertThatThrownBy(() -> signUpService.signUp(signUpRequest))
