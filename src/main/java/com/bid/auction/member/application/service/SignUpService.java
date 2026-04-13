@@ -23,7 +23,7 @@ public class SignUpService {
 	private final PasswordEncoder passwordEncoder;
 
 	public void signUp(SignUpRequest signUpRequest) {
-		memberValidator.validatePasswordMatch(
+		memberValidator.validatePasswordConfirmation(
 			signUpRequest.password(),
 			signUpRequest.checkPassword()
 		);
