@@ -10,7 +10,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.bid.auction.auth.application.dto.request.LoginRequest;
 import com.bid.auction.auth.application.dto.session.SessionMember;
@@ -18,6 +17,7 @@ import com.bid.auction.auth.application.fixture.AuthFixture;
 import com.bid.auction.global.error.exception.BadRequestException;
 import com.bid.auction.global.error.model.ErrorCode;
 import com.bid.auction.member.application.component.MemberFinder;
+import com.bid.auction.member.application.validator.MemberValidator;
 import com.bid.auction.member.domain.model.Member;
 import com.bid.auction.member.fixture.MemberFixture;
 
@@ -28,7 +28,7 @@ class LoginServiceTest {
 	private MemberFinder memberFinder;
 
 	@Mock
-	private PasswordEncoder passwordEncoder;
+	private MemberValidator memberValidator;
 
 	@InjectMocks
 	private LoginService loginService;
@@ -41,7 +41,6 @@ class LoginServiceTest {
 		Member member = MemberFixture.aMember();
 
 		given(memberFinder.findByEmail(anyString())).willReturn(member);
-		given(passwordEncoder.matches(anyString(), anyString())).willReturn(true);
 
 		// WHEN
 		SessionMember sessionMember = loginService.login(loginRequest);
@@ -51,7 +50,11 @@ class LoginServiceTest {
 		assertThat(sessionMember.email()).isEqualTo(member.getEmail());
 
 		verify(memberFinder).findByEmail(eq(loginRequest.email()));
-		verify(passwordEncoder).matches(eq(loginRequest.password()), eq(member.getPassword()));
+		verify(memberValidator).validatePassword(
+			eq(loginRequest.password()),
+			eq(member.getPassword()),
+			eq(ErrorCode.LOGIN_FAILED)
+		);
 	}
 
 	@Test
@@ -67,10 +70,9 @@ class LoginServiceTest {
 		// WHEN & THEN
 		assertThatThrownBy(() -> loginService.login(loginRequest))
 			.isInstanceOf(BadRequestException.class)
-			.extracting(exception -> ((BadRequestException)exception).getErrorCode())
-			.isEqualTo(ErrorCode.LOGIN_FAILED);
+			.hasFieldOrPropertyWithValue("errorCode", ErrorCode.LOGIN_FAILED);
 
-		verify(passwordEncoder, never()).matches(anyString(), anyString());
+		verify(memberValidator, never()).validatePassword(anyString(), anyString(), any());
 	}
 
 	@Test
@@ -81,15 +83,21 @@ class LoginServiceTest {
 		Member member = MemberFixture.aMember();
 
 		given(memberFinder.findByEmail(anyString())).willReturn(member);
-		given(passwordEncoder.matches(anyString(), anyString())).willReturn(false);
+
+		doThrow(new BadRequestException(ErrorCode.LOGIN_FAILED))
+			.when(memberValidator)
+			.validatePassword(eq(loginRequest.password()), eq(member.getPassword()), eq(ErrorCode.LOGIN_FAILED));
 
 		// WHEN & THEN
 		assertThatThrownBy(() -> loginService.login(loginRequest))
 			.isInstanceOf(BadRequestException.class)
-			.extracting(exception -> ((BadRequestException)exception).getErrorCode())
-			.isEqualTo(ErrorCode.LOGIN_FAILED);
+			.hasFieldOrPropertyWithValue("errorCode", ErrorCode.LOGIN_FAILED);
 
-		verify(memberFinder, times(1)).findByEmail(eq(loginRequest.email()));
-		verify(passwordEncoder, times(1)).matches(eq(loginRequest.password()), member.getPassword());
+		verify(memberFinder).findByEmail(eq(loginRequest.email()));
+		verify(memberValidator).validatePassword(
+			eq(loginRequest.password()),
+			eq(member.getPassword()),
+			eq(ErrorCode.LOGIN_FAILED)
+		);
 	}
 }
