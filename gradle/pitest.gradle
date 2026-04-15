@@ -1,0 +1,12 @@
+pitest {
+    junit5PluginVersion = '1.2.1'
+    targetClasses = ['com.bid.auction.*.application.service.*']
+    targetTests = ['com.bid.auction.*.application.service.*']
+
+    excludedClasses = ["**.*Dto*", "**.*Request*", "**.*Response*", "**.*Mapper*"]
+
+    reportDir = layout.buildDirectory.dir("reports/pitest").get().asFile
+    threads = Runtime.runtime.availableProcessors()
+    outputFormats = ['HTML']
+    timestampedReports = false
+}
