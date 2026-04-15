@@ -15,6 +15,7 @@ import com.bid.auction.global.error.exception.NotFoundException;
 import com.bid.auction.global.error.model.ErrorCode;
 import com.bid.auction.member.application.component.MemberFinder;
 import com.bid.auction.member.application.dto.response.ProfileResponse;
+import com.bid.auction.member.application.mapper.MemberResponseMapper;
 import com.bid.auction.member.domain.model.Member;
 import com.bid.auction.member.fixture.MemberFixture;
 
@@ -33,7 +34,7 @@ class ProfileReadServiceTest {
 		// GIVEN
 		Long memberId = 999L;
 		Member member = MemberFixture.aMember();
-		ProfileResponse expectedProfileResponse = MemberFixture.aProfileResponse(member);
+		ProfileResponse expectedProfileResponse = MemberResponseMapper.toProfileResponse(member);
 
 		given(memberFinder.findById(memberId)).willReturn(member);
 
