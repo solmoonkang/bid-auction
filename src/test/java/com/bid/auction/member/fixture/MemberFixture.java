@@ -123,15 +123,6 @@ public class MemberFixture {
 		);
 	}
 
-	public static ProfileResponse aProfileResponse(Member member) {
-		return new ProfileResponse(
-			member.getEmail(),
-			member.getName(),
-			member.getNickname(),
-			member.getPhoneNumber()
-		);
-	}
-
 	public static WithdrawalRequest aWithdrawalRequest() {
 		return new WithdrawalRequest(
 			"password123!"
